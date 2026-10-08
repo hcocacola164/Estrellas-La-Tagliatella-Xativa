@@ -2,10 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://search.google.com/local/writereview?placeid=ChIJxwJeovWhYQ0R4eG9--u_oQA">
-    <title>Redirigiendo a opiniones...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando...</title>
 </head>
 <body>
-    <p>Si no rediriges automáticamente, haz clic <a href="https://search.google.com/local/writereview?placeid=ChIJxwJeovWhYQ0R4eG9--u_oQA">aquí</a>.</p>
+    <script>
+        // Pega aquí la URL que acabas de copiar de Apps Script
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVz85ZIBfSJ4yxP0rZ08NpyNOWqUguHcENkRv80fUB4cFsFxFJJnJE7tw8Sw8A913b/exec";
+        
+        // Pon el nombre del local para saber de quién es el escaneo
+        const NOMBRE_LOCAL = "La Tagliatella"; 
+
+        // Pon el enlace directo a la ficha de reseñas de Google
+        const GOOGLE_REVIEWS_URL = "https://search.google.com/local/writereview?placeid=ChIJxwJeovWhYQ0R4eG9--u_oQA";
+
+        function redirigir() {
+            window.location.href = GOOGLE_REVIEWS_URL;
+        }
+
+        // Envía el escaneo a Google Sheets y redirige a la reseña
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ local: NOMBRE_LOCAL })
+        })
+        .then(() => redirigir())
+        .catch(() => redirigir());
+
+        // Respaldo por si tarda la conexión del móvil
+        setTimeout(redirigir, 1500);
+    </script>
 </body>
 </html>
